@@ -3,95 +3,97 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leonida Legend — GTA 6 Trophy Guide &amp; Tracker</title>
-<meta name="description" content="An offline guide and tracker for all 55 GTA 6 trophies on PS5: official names, descriptions and grades, a roadmap to the Platinum, cited guides, filters, a spoiler setting, saved progress, export and import.">
+<title>Vice Atlas — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and checklist tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5, with a platinum roadmap, missable flags and a spoiler setting.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="masthead">
-  <div class="masthead-inner">
-    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
-    <h1>Leonida Legend</h1>
-    <p class="subtitle">The complete GTA 6 trophy guide and tracker — every trophy, a roadmap to the Platinum, and your progress, saved on this device. Works fully offline.</p>
-    <div class="progress-wrap" role="group" aria-label="Trophy progress">
-      <div class="progress-line">
-        <strong id="progressText">0 of 55 earned · 0%</strong>
-        <span id="progressDetail">Platinum: Vice Got a Price!</span>
-      </div>
-      <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
-      <div class="grade-counts" id="gradeCounts"></div>
+<header class="va-masthead">
+  <div class="va-brand">
+    <p class="va-kicker">Grand Theft Auto VI &middot; PlayStation 5</p>
+    <h1>Vice Atlas</h1>
+    <p class="va-tagline">Every trophy, every step to the platinum — a guide and tracker that works with the network off.</p>
+  </div>
+  <div class="va-progress" aria-label="Overall progress">
+    <div class="va-progress-top">
+      <span id="va-count-line">0 of 55 earned</span>
+      <span id="va-percent">0%</span>
     </div>
+    <div class="va-meter" role="progressbar" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="va-meter">
+      <span id="va-meter-fill"></span>
+    </div>
+    <ul class="va-grade-tally" id="va-grade-tally"></ul>
   </div>
 </header>
 
-<nav class="tabs" aria-label="Sections">
-  <button id="tabChecklist" class="tab active" type="button">Checklist</button>
-  <button id="tabRoadmap" class="tab" type="button">Roadmap to Platinum</button>
+<nav class="va-views" aria-label="Views">
+  <button type="button" id="va-view-checklist" class="va-view-tab va-active" aria-pressed="true">Checklist</button>
+  <button type="button" id="va-view-roadmap" class="va-view-tab" aria-pressed="false">Platinum roadmap</button>
+  <button type="button" id="va-view-missable" class="va-view-tab" aria-pressed="false">Missables &amp; warnings</button>
 </nav>
 
+<section class="va-toolbar" aria-label="Filters and tools">
+  <label class="va-field va-search-field">Search
+    <input type="search" id="va-search" placeholder="Trophy name or description…" autocomplete="off">
+  </label>
+  <label class="va-field">Kind
+    <select id="va-kind">
+      <option value="all">All kinds</option>
+      <option value="story">Story</option>
+      <option value="missable">Missable</option>
+      <option value="collectibles">Collectibles</option>
+      <option value="activities">Activities</option>
+      <option value="online">Online</option>
+    </select>
+  </label>
+  <label class="va-field">Grade
+    <select id="va-grade">
+      <option value="all">All grades</option>
+      <option value="platinum">Platinum</option>
+      <option value="gold">Gold</option>
+      <option value="silver">Silver</option>
+      <option value="bronze">Bronze</option>
+    </select>
+  </label>
+  <label class="va-check"><input type="checkbox" id="va-earned-only"> Earned only</label>
+  <label class="va-check"><input type="checkbox" id="va-missable-only"> Missable only</label>
+  <label class="va-check va-spoiler-check"><input type="checkbox" id="va-spoiler"> Hide story spoilers</label>
+  <span class="va-actions">
+    <button type="button" id="va-export">Export progress</button>
+    <label class="va-import-btn">Import progress
+      <input type="file" id="va-import" accept="application/json,.json">
+    </label>
+    <button type="button" id="va-reset" title="Clear all earned marks">Reset</button>
+  </span>
+</section>
+
+<p class="va-status" id="va-status" role="status"></p>
+<p class="va-showing" id="va-showing">Showing 55 of 55</p>
+
 <main>
-  <section id="viewChecklist" class="view">
-    <div class="toolbar">
-      <label class="search-box">Search
-        <input id="searchInput" type="search" placeholder="Search name, mission, place…" autocomplete="off">
-      </label>
-      <div class="filters" id="kindFilters" role="group" aria-label="Filter by kind"></div>
-      <div class="toolbar-row">
-        <label>Grade
-          <select id="gradeFilter">
-            <option value="">All grades</option>
-            <option value="platinum">Platinum</option>
-            <option value="gold">Gold</option>
-            <option value="silver">Silver</option>
-            <option value="bronze">Bronze</option>
-          </select>
-        </label>
-        <label class="check"><input id="earnedOnly" type="checkbox"> Earned only</label>
-        <label class="check"><input id="unearnedOnly" type="checkbox"> Not earned yet</label>
-        <label class="check spoiler-check"><input id="spoilerToggle" type="checkbox"> Hide story spoilers</label>
-      </div>
-      <div class="toolbar-row actions">
-        <button id="exportBtn" type="button">Export progress</button>
-        <button id="importBtn" type="button">Import progress</button>
-        <input id="importFile" type="file" accept=".json,application/json" hidden>
-        <button id="resetBtn" type="button" class="quiet">Reset progress</button>
-        <span id="saveNote" class="save-note" aria-live="polite">Progress saves on this device.</span>
-      </div>
-      <p id="resultCount" class="result-count" aria-live="polite"></p>
-    </div>
-    <div id="missableBanner" class="banner missable-banner">
-      <strong>⚠ One trophy can be missed:</strong> <a href="#trophy-28">Positive Mental Attitude</a> — meditate at every spot, and take the Chapter 1 meditation with Lucia when the story offers it. The guides report no mission replay, so do it when it comes. Everything else can be finished in free roam after the story.
-    </div>
-    <ul id="trophyList" class="trophy-list"></ul>
-    <p id="emptyNote" class="empty-note" hidden>No trophies match these filters. Clear the search or pick another filter.</p>
+  <section id="va-list-view" aria-label="Trophy checklist">
+    <div class="va-grid" id="va-grid"></div>
+    <p class="va-empty" id="va-empty" hidden>No trophies match these filters. Clear the search or widen a filter.</p>
   </section>
 
-  <section id="viewRoadmap" class="view" hidden>
-    <div class="roadmap-intro">
-      <h2>Roadmap to the Platinum</h2>
-      <p>One playthrough, about 200 hours, no online trophies and no difficulty setting. The public guides report <strong>no mission replay</strong>, so story-moment trophies are done while the mission is live — and <strong>cheats disable trophies and saving</strong>, so keep them off. Work the stages in order; each stage lists its trophies, and the tracker above stays in sync.</p>
-      <p class="roadmap-key"><span class="pill missable-pill">MISSABLE</span> can be lost if its moment passes &nbsp;·&nbsp; <span class="pill spoiler-pill">STORY</span> hidden by the spoiler setting until earned &nbsp;·&nbsp; <span class="pill count-pill">×N</span> a counted target</p>
-    </div>
-    <ol id="roadmapList" class="roadmap-list"></ol>
-    <div class="roadmap-facts">
-      <h3>Facts the roadmap is built on</h3>
-      <ul>
-        <li>55 trophies: 1 Platinum, 2 Gold, 6 Silver, 46 Bronze; 28 of them hidden on PlayStation until earned.</li>
-        <li>One playthrough is enough; free roam continues after the final mission.</li>
-        <li>Hardest trophy: <strong>A Long Road</strong> (100% completion) — track it in-game at Progress &gt; Stats &gt; 100% Completion.</li>
-        <li>Only one trophy is reported as possibly missable: <strong>Positive Mental Attitude</strong>.</li>
-        <li>Every guide in this app names its sources; each trophy card links them.</li>
-      </ul>
-      <p class="source-note">List sources: <a href="https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series">GTABase — GTA 6 achievements &amp; trophies list</a> · <a href="https://www.keengamer.com/articles/guides/gta-6-trophy-guide-platinum-roadmap-all-55-trophies/">KeenGamer — GTA 6 trophy guide &amp; platinum roadmap</a> · <a href="https://insider-gaming.com/complete-gta-6-trophy-list-how-to-get-all-trophies-achievements/">Insider Gaming — Complete GTA 6 trophy list</a> · <a href="https://egamers.io/gta-6-trophy-list-all-55-trophies-and-achievements-plus-the-hardest-ones/">EGamers — GTA 6 trophy list</a>. Guide text is written in our own words; sources are cited, never copied.</p>
-    </div>
+  <section id="va-roadmap-view" aria-label="Platinum roadmap" hidden>
+    <p class="va-roadmap-intro">Six stages from the first mission to the platinum. Story first, then collectibles and activities, then the one-offs, then the 100% completion gold. About 200 hours all in, at a relaxed pace — and only one trophy can be missed, so guard it in stage 2.</p>
+    <div class="va-stages" id="va-stages"></div>
+  </section>
+
+  <section id="va-missable-view" aria-label="Missables and warnings" hidden>
+    <h2>Missables &amp; warnings</h2>
+    <p>Grand Theft Auto VI has no mission replay, so a one-off moment deserves a manual save. The published guides flag exactly one trophy as potentially missable; the rest can be finished in free roam after the story. The cautions below are the ones that matter.</p>
+    <div class="va-warnings" id="va-warnings"></div>
   </section>
 </main>
 
-<footer class="colophon">
-  <p>Leonida Legend is an unofficial fan guide. It is not affiliated with Rockstar Games or PlayStation, and it uses no Rockstar logo, artwork or game screenshots. Trophy names, descriptions and grades are shown as PlayStation publishes them. The app runs entirely offline — the only network use is when you choose to follow a source link.</p>
-  <p><a href="#top" id="backTop">Back to top</a></p>
+<footer class="va-foot">
+  <p>Works fully offline: every file this page loads sits under <code>app/</code>, and your progress is saved only in this browser (localStorage). Citation links in each guide open the published guide they cite; the app itself fetches nothing.</p>
+  <p>Guides are written for this page in its own words and cite their sources. Where a method is still unconfirmed by players, the guide says so plainly instead of guessing. Trophy names, descriptions and grades are the official PlayStation list: 55 trophies — 1 platinum, 2 gold, 6 silver, 46 bronze — 28 of them hidden until earned. No Rockstar Games artwork or logo is used anywhere here.</p>
+  <p><a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx trophy guide</a> &middot; <a href="https://www.pushsquare.com/guides/gta-6-trophy-guide-and-roadmap">Push Square trophy guide</a> &middot; <a href="https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series">GTABase trophy list</a></p>
 </footer>
 
-<script src="app.js"></script>
+<script type="module" src="app.js"></script>
 </body>
 </html>
