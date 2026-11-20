@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Legend — GTA 6 Trophy Guide &amp; Tracker</title>
+<meta name="description" content="An offline guide and tracker for all 55 GTA 6 trophies on PS5: official names, descriptions and grades, a roadmap to the Platinum, cited guides, filters, a spoiler setting, saved progress, export and import.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; 55 trophies</p>
+    <h1>Leonida Legend</h1>
+    <p class="subtitle">The complete GTA 6 trophy guide and tracker — every trophy, a roadmap to the Platinum, and your progress, saved on this device. Works fully offline.</p>
+    <div class="progress-wrap" role="group" aria-label="Trophy progress">
+      <div class="progress-line">
+        <strong id="progressText">0 of 55 earned · 0%</strong>
+        <span id="progressDetail">Platinum: Vice Got a Price!</span>
+      </div>
+      <div class="progress-bar"><div id="progressFill" class="progress-fill" style="width:0%"></div></div>
+      <div class="grade-counts" id="gradeCounts"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <button id="tabChecklist" class="tab active" type="button">Checklist</button>
+  <button id="tabRoadmap" class="tab" type="button">Roadmap to Platinum</button>
+</nav>
+
+<main>
+  <section id="viewChecklist" class="view">
+    <div class="toolbar">
+      <label class="search-box">Search
+        <input id="searchInput" type="search" placeholder="Search name, mission, place…" autocomplete="off">
+      </label>
+      <div class="filters" id="kindFilters" role="group" aria-label="Filter by kind"></div>
+      <div class="toolbar-row">
+        <label>Grade
+          <select id="gradeFilter">
+            <option value="">All grades</option>
+            <option value="platinum">Platinum</option>
+            <option value="gold">Gold</option>
+            <option value="silver">Silver</option>
+            <option value="bronze">Bronze</option>
+          </select>
+        </label>
+        <label class="check"><input id="earnedOnly" type="checkbox"> Earned only</label>
+        <label class="check"><input id="unearnedOnly" type="checkbox"> Not earned yet</label>
+        <label class="check spoiler-check"><input id="spoilerToggle" type="checkbox"> Hide story spoilers</label>
+      </div>
+      <div class="toolbar-row actions">
+        <button id="exportBtn" type="button">Export progress</button>
+        <button id="importBtn" type="button">Import progress</button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+        <button id="resetBtn" type="button" class="quiet">Reset progress</button>
+        <span id="saveNote" class="save-note" aria-live="polite">Progress saves on this device.</span>
+      </div>
+      <p id="resultCount" class="result-count" aria-live="polite"></p>
+    </div>
+    <div id="missableBanner" class="banner missable-banner">
+      <strong>⚠ One trophy can be missed:</strong> <a href="#trophy-28">Positive Mental Attitude</a> — meditate at every spot, and take the Chapter 1 meditation with Lucia when the story offers it. The guides report no mission replay, so do it when it comes. Everything else can be finished in free roam after the story.
+    </div>
+    <ul id="trophyList" class="trophy-list"></ul>
+    <p id="emptyNote" class="empty-note" hidden>No trophies match these filters. Clear the search or pick another filter.</p>
+  </section>
+
+  <section id="viewRoadmap" class="view" hidden>
+    <div class="roadmap-intro">
+      <h2>Roadmap to the Platinum</h2>
+      <p>One playthrough, about 200 hours, no online trophies and no difficulty setting. The public guides report <strong>no mission replay</strong>, so story-moment trophies are done while the mission is live — and <strong>cheats disable trophies and saving</strong>, so keep them off. Work the stages in order; each stage lists its trophies, and the tracker above stays in sync.</p>
+      <p class="roadmap-key"><span class="pill missable-pill">MISSABLE</span> can be lost if its moment passes &nbsp;·&nbsp; <span class="pill spoiler-pill">STORY</span> hidden by the spoiler setting until earned &nbsp;·&nbsp; <span class="pill count-pill">×N</span> a counted target</p>
+    </div>
+    <ol id="roadmapList" class="roadmap-list"></ol>
+    <div class="roadmap-facts">
+      <h3>Facts the roadmap is built on</h3>
+      <ul>
+        <li>55 trophies: 1 Platinum, 2 Gold, 6 Silver, 46 Bronze; 28 of them hidden on PlayStation until earned.</li>
+        <li>One playthrough is enough; free roam continues after the final mission.</li>
+        <li>Hardest trophy: <strong>A Long Road</strong> (100% completion) — track it in-game at Progress &gt; Stats &gt; 100% Completion.</li>
+        <li>Only one trophy is reported as possibly missable: <strong>Positive Mental Attitude</strong>.</li>
+        <li>Every guide in this app names its sources; each trophy card links them.</li>
+      </ul>
+      <p class="source-note">List sources: <a href="https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series">GTABase — GTA 6 achievements &amp; trophies list</a> · <a href="https://www.keengamer.com/articles/guides/gta-6-trophy-guide-platinum-roadmap-all-55-trophies/">KeenGamer — GTA 6 trophy guide &amp; platinum roadmap</a> · <a href="https://insider-gaming.com/complete-gta-6-trophy-list-how-to-get-all-trophies-achievements/">Insider Gaming — Complete GTA 6 trophy list</a> · <a href="https://egamers.io/gta-6-trophy-list-all-55-trophies-and-achievements-plus-the-hardest-ones/">EGamers — GTA 6 trophy list</a>. Guide text is written in our own words; sources are cited, never copied.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="colophon">
+  <p>Leonida Legend is an unofficial fan guide. It is not affiliated with Rockstar Games or PlayStation, and it uses no Rockstar logo, artwork or game screenshots. Trophy names, descriptions and grades are shown as PlayStation publishes them. The app runs entirely offline — the only network use is when you choose to follow a source link.</p>
+  <p><a href="#top" id="backTop">Back to top</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
