@@ -1,74 +1,67 @@
-// Vice Atlas — local static server for trying the guide in a browser.
+// A minimal static file server for local development of the codex.
 //
-// Serves app/ on http://localhost:8080 (or --port <n>). Standard library
-// only, no build step, nothing but static files. This is a development
-// convenience, not a server for the internet.
+// Serves the app/ directory on http://localhost:8080 (or --port <n>), with the
+// MIME types a browser needs and nothing else. It refuses any path that would
+// escape app/. This is a development convenience, not a production server.
+//
+//   node serve.ts
+//   node serve.ts --port 8123
 
-import { createReadStream, statSync } from 'node:fs';
-import { createServer } from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { createReadStream, statSync } from "node:fs";
+import { createServer } from "node:http";
+import { extname, join, normalize, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const APP_ROOT = resolve(fileURLToPath(new URL('./app', import.meta.url)));
+const root = resolve(fileURLToPath(new URL("./app", import.meta.url)));
+const args = process.argv.slice(2);
+const portIndex = args.indexOf("--port");
+const requested = portIndex === -1 ? 8080 : Number(args[portIndex + 1]);
+const port = Number.isInteger(requested) && requested > 0 && requested < 65536 ? requested : 8080;
 
-const TYPES: Record<string, string> = {
-  '.html': 'text/html; charset=utf-8',
-  '.js': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.png': 'image/png',
-  '.svg': 'image/svg+xml',
-  '.webp': 'image/webp',
+const MIME = {
+  ".html": "text/html; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".mjs": "text/javascript; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".ico": "image/x-icon",
 };
 
-function pickPort(): number {
-  const args = process.argv.slice(2);
-  const at = args.indexOf('--port');
-  const wanted = at === -1 ? 8080 : Number(args[at + 1]);
-  return Number.isInteger(wanted) && wanted > 0 && wanted < 65536 ? wanted : 8080;
-}
-
-function resolveInside(requestPath: string): string | null {
-  let cleaned = requestPath;
-  if (cleaned.endsWith('/')) cleaned += 'index.html';
-  const file = resolve(join(APP_ROOT, normalize(cleaned)));
-  if (file !== APP_ROOT && !file.startsWith(APP_ROOT + sep)) return null;
-  return file;
-}
-
-const server = createServer((req, res) => {
-  let pathname: string;
+createServer((request, response) => {
+  const url = new URL(request.url ?? "/", "http://localhost");
+  let pathname;
   try {
-    pathname = decodeURIComponent(new URL(req.url ?? '/', 'http://localhost').pathname);
+    pathname = decodeURIComponent(url.pathname);
   } catch {
-    res.writeHead(400).end('bad request');
+    response.writeHead(400).end("bad request");
     return;
   }
-  const file = resolveInside(pathname);
-  if (file === null) {
-    res.writeHead(403).end('forbidden');
+  if (pathname.endsWith("/")) pathname += "index.html";
+  const file = resolve(join(root, normalize(pathname)));
+  if (file !== root && !file.startsWith(root + sep)) {
+    response.writeHead(403).end("forbidden");
     return;
   }
-  let size: number;
+  let size;
   try {
-    const info = statSync(file);
-    if (!info.isFile()) throw new Error('not a file');
-    size = info.size;
+    const stats = statSync(file);
+    if (!stats.isFile()) throw new Error("not a file");
+    size = stats.size;
   } catch {
-    res.writeHead(404).end('not found');
+    response.writeHead(404).end("not found");
     return;
   }
-  res.writeHead(200, {
-    'content-type': TYPES[extname(file).toLowerCase()] ?? 'application/octet-stream',
-    'content-length': size,
-    'cache-control': 'no-store',
+  response.writeHead(200, {
+    "content-type": MIME[extname(file).toLowerCase()] ?? "application/octet-stream",
+    "content-length": size,
+    "cache-control": "no-store",
   });
-  createReadStream(file).pipe(res);
-});
-
-const port = pickPort();
-server.listen(port, '127.0.0.1', () => {
-  console.log(`Vice Atlas is on http://localhost:${port}`);
+  createReadStream(file).pipe(response);
+}).listen(port, "127.0.0.1", () => {
+  console.log(`app/ is on http://localhost:${port}`);
 });
