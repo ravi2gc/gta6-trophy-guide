@@ -1,99 +1,110 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vice Atlas — GTA VI Trophy Guide &amp; Tracker</title>
-<meta name="description" content="Offline guide and checklist tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5, with a platinum roadmap, missable flags and a spoiler setting.">
+<title>The Leonida Trophy Codex — GTA VI Platinum Guide &amp; Tracker</title>
+<meta name="description" content="A complete GTA VI trophy guide and tracker: all 55 PS5 trophies, own-words guides with cited sources, disputes, a 100% ledger and a six-stage platinum roadmap. Fully offline.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="va-masthead">
-  <div class="va-brand">
-    <p class="va-kicker">Grand Theft Auto VI &middot; PlayStation 5</p>
-    <h1>Vice Atlas</h1>
-    <p class="va-tagline">Every trophy, every step to the platinum — a guide and tracker that works with the network off.</p>
-  </div>
-  <div class="va-progress" aria-label="Overall progress">
-    <div class="va-progress-top">
-      <span id="va-count-line">0 of 55 earned</span>
-      <span id="va-percent">0%</span>
-    </div>
-    <div class="va-meter" role="progressbar" aria-valuemin="0" aria-valuemax="55" aria-valuenow="0" id="va-meter">
-      <span id="va-meter-fill"></span>
-    </div>
-    <ul class="va-grade-tally" id="va-grade-tally"></ul>
+<header class="masthead">
+  <div class="masthead-inner">
+    <p class="kicker">Grand Theft Auto VI &middot; PlayStation 5 &middot; A field codex for completionists</p>
+    <h1>The Leonida Trophy Codex</h1>
+    <p class="tagline">Every trophy, every count, every disagreement between the guides &mdash; settled in plain words, with the receipts.</p>
+    <p class="facts"><span><strong>55</strong> trophies</span><span><strong>1</strong> platinum</span><span><strong>2</strong> gold</span><span><strong>6</strong> silver</span><span><strong>46</strong> bronze</span><span><strong>28</strong> hidden</span><span><strong>0</strong> online</span><span><strong>~200</strong> hours</span></p>
   </div>
 </header>
-
-<nav class="va-views" aria-label="Views">
-  <button type="button" id="va-view-checklist" class="va-view-tab va-active" aria-pressed="true">Checklist</button>
-  <button type="button" id="va-view-roadmap" class="va-view-tab" aria-pressed="false">Platinum roadmap</button>
-  <button type="button" id="va-view-missable" class="va-view-tab" aria-pressed="false">Missables &amp; warnings</button>
-</nav>
-
-<section class="va-toolbar" aria-label="Filters and tools">
-  <label class="va-field va-search-field">Search
-    <input type="search" id="va-search" placeholder="Trophy name or description…" autocomplete="off">
-  </label>
-  <label class="va-field">Kind
-    <select id="va-kind">
-      <option value="all">All kinds</option>
-      <option value="story">Story</option>
-      <option value="missable">Missable</option>
-      <option value="collectibles">Collectibles</option>
-      <option value="activities">Activities</option>
-      <option value="online">Online</option>
-    </select>
-  </label>
-  <label class="va-field">Grade
-    <select id="va-grade">
-      <option value="all">All grades</option>
-      <option value="platinum">Platinum</option>
-      <option value="gold">Gold</option>
-      <option value="silver">Silver</option>
-      <option value="bronze">Bronze</option>
-    </select>
-  </label>
-  <label class="va-check"><input type="checkbox" id="va-earned-only"> Earned only</label>
-  <label class="va-check"><input type="checkbox" id="va-missable-only"> Missable only</label>
-  <label class="va-check va-spoiler-check"><input type="checkbox" id="va-spoiler"> Hide story spoilers</label>
-  <span class="va-actions">
-    <button type="button" id="va-export">Export progress</button>
-    <label class="va-import-btn">Import progress
-      <input type="file" id="va-import" accept="application/json,.json">
-    </label>
-    <button type="button" id="va-reset" title="Clear all earned marks">Reset</button>
-  </span>
-</section>
-
-<p class="va-status" id="va-status" role="status"></p>
-<p class="va-showing" id="va-showing">Showing 55 of 55</p>
-
-<main>
-  <section id="va-list-view" aria-label="Trophy checklist">
-    <div class="va-grid" id="va-grid"></div>
-    <p class="va-empty" id="va-empty" hidden>No trophies match these filters. Clear the search or widen a filter.</p>
-  </section>
-
-  <section id="va-roadmap-view" aria-label="Platinum roadmap" hidden>
-    <p class="va-roadmap-intro">Six stages from the first mission to the platinum. Story first, then collectibles and activities, then the one-offs, then the 100% completion gold. About 200 hours all in, at a relaxed pace — and only one trophy can be missed, so guard it in stage 2.</p>
-    <div class="va-stages" id="va-stages"></div>
-  </section>
-
-  <section id="va-missable-view" aria-label="Missables and warnings" hidden>
-    <h2>Missables &amp; warnings</h2>
-    <p>Grand Theft Auto VI has no mission replay, so a one-off moment deserves a manual save. The published guides flag exactly one trophy as potentially missable; the rest can be finished in free roam after the story. The cautions below are the ones that matter.</p>
-    <div class="va-warnings" id="va-warnings"></div>
-  </section>
-</main>
-
-<footer class="va-foot">
-  <p>Works fully offline: every file this page loads sits under <code>app/</code>, and your progress is saved only in this browser (localStorage). Citation links in each guide open the published guide they cite; the app itself fetches nothing.</p>
-  <p>Guides are written for this page in its own words and cite their sources. Where a method is still unconfirmed by players, the guide says so plainly instead of guessing. Trophy names, descriptions and grades are the official PlayStation list: 55 trophies — 1 platinum, 2 gold, 6 silver, 46 bronze — 28 of them hidden until earned. No Rockstar Games artwork or logo is used anywhere here.</p>
-  <p><a href="https://www.powerpyx.com/gta-6-grand-theft-auto-vi-trophy-guide-roadmap/">PowerPyx trophy guide</a> &middot; <a href="https://www.pushsquare.com/guides/gta-6-trophy-guide-and-roadmap">Push Square trophy guide</a> &middot; <a href="https://www.gtabase.com/articles/gta-6/gta-6-achievements-trophies-list-ps5-xbox-series">GTABase trophy list</a></p>
-</footer>
-
-<script type="module" src="app.js"></script>
+<div class="layout">
+  <aside class="rail" aria-label="Tracker and filters">
+    <section class="panel" id="progress-panel">
+      <h2>Your progress</h2>
+      <div class="ring-wrap">
+        <svg class="ring" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+          <circle cx="60" cy="60" r="52" class="ring-bg"></circle>
+          <circle cx="60" cy="60" r="52" class="ring-fg" id="ring-fg"></circle>
+        </svg>
+        <div class="ring-label"><span id="ring-pct">0%</span><small id="ring-count">0 of 55</small></div>
+      </div>
+      <div id="grade-bars"></div>
+      <p class="muted" id="points-line"></p>
+    </section>
+    <section class="panel">
+      <h2>Find a trophy</h2>
+      <label class="field"><span>Search</span><input id="search" type="search" placeholder="Name, mission, keyword&hellip;" autocomplete="off"></label>
+      <label class="field"><span>Grade</span><select id="filter-grade"><option value="">All grades</option><option value="platinum">Platinum</option><option value="gold">Gold</option><option value="silver">Silver</option><option value="bronze">Bronze</option></select></label>
+      <label class="field"><span>Category</span><select id="filter-cat"><option value="">All categories</option></select></label>
+      <label class="field"><span>Status</span><select id="filter-status"><option value="">Earned &amp; unearned</option><option value="earned">Earned only</option><option value="unearned">Unearned only</option><option value="missable">Potentially missable only</option></select></label>
+      <label class="check"><input type="checkbox" id="spoiler-toggle" checked> <span>Hide spoiler names &amp; guides</span></label>
+      <p class="muted small">Spoiler shield on: 28 hidden trophies show as &ldquo;Hidden trophy&rdquo; until you reveal or earn them. Your choice is remembered.</p>
+      <div class="btn-row">
+        <button id="export-btn" type="button">Export progress</button>
+        <button id="import-btn" type="button">Import progress</button>
+        <input type="file" id="import-file" accept=".json,application/json" hidden>
+      </div>
+      <p class="muted small" id="export-note">Export downloads a JSON file with your earned trophies and ledger counts. Import restores it, and rejects anything that is not a valid codex file.</p>
+      <p class="muted small" id="hash-note"></p>
+      <button id="reset-btn" type="button" class="linklike">Reset all progress</button>
+    </section>
+    <section class="panel">
+      <h2>Roadmap at a glance</h2>
+      <ol class="mini-roadmap" id="mini-roadmap"></ol>
+    </section>
+  </aside>
+  <main class="main">
+    <nav class="tabs" aria-label="Sections">
+      <button type="button" data-tab="trophies" class="active">Trophies</button>
+      <button type="button" data-tab="roadmap">Roadmap</button>
+      <button type="button" data-tab="ledger">100% Ledger</button>
+      <button type="button" data-tab="disputes">Disputes</button>
+      <button type="button" data-tab="sources">Sources</button>
+    </nav>
+    <section id="tab-trophies" class="tabpage active">
+      <p class="intro">Fifty-five trophies, each with an own-words guide, its unlock conditions, and the sources that back every claim. <strong>Guides are never copied from a source</strong>: they are written fresh for this codex and cite the pages that were actually read on 21 November 2026. Story trophies are hidden behind the spoiler shield by default.</p>
+      <p class="muted" id="result-count"></p>
+      <div id="trophy-list"></div>
+    </section>
+    <section id="tab-roadmap" class="tabpage">
+      <h2>Six stages to the platinum</h2>
+      <p class="intro">PowerPyx breaks the run into 60&ndash;80 hours of story, about 100 hours of 100% checklist, and about 10 hours of cleanup &mdash; roughly 200 hours in all. Push Square warns it can run past 250 hours, and one outlier puts it at 100&ndash;200. Our six stages follow PowerPyx's shape, split so the story and the checklist each get room. See Disputes for the full argument.</p>
+      <div id="roadmap"></div>
+      <h2>At risk &mdash; read this before Chapter 1 ends</h2>
+      <div id="atrisk"></div>
+      <h2>Unconfirmed &mdash; what nobody has settled yet</h2>
+      <p class="intro">These are stated as unconfirmed, never guessed. If a guide elsewhere states one of these as fact, it is guessing.</p>
+      <ul class="plain" id="unconfirmed"></ul>
+    </section>
+    <section id="tab-ledger" class="tabpage">
+      <h2>The 100% ledger</h2>
+      <p class="intro">Everything counted on the road to A Long Road. Trophy target and 100% target are shown separately, because they are often different numbers: the trophy stops early, the checklist does not. Money lines are listed separately in dollars. Tick the counters as you go; they are saved with your progress and included in export.</p>
+      <p class="muted" id="ledger-summary"></p>
+      <div id="ledger"></div>
+    </section>
+    <section id="tab-disputes" class="tabpage">
+      <h2>Disputes &mdash; where the guides disagree</h2>
+      <p class="intro">Eleven real disagreements found while reading the sources. Both versions are shown with their sources, and each ends with <strong>our call</strong> and the reason for it. Nothing here is invented: every dispute comes from two pages that were actually read.</p>
+      <h2>Ledger preview</h2>
+      <p class="intro">The full 100% ledger lives on its own tab. The headline numbers, trophy target vs 100% target:</p>
+      <div id="ledger-preview"></div>
+      <div id="disputes"></div>
+    </section>
+    <section id="tab-sources" class="tabpage">
+      <h2>Sources</h2>
+      <p class="intro"><strong>Citation hygiene rule:</strong> a claim is cited only through a page that was actually read during this build, on 21 November 2026. Second-hand mentions are cited through the page that reported them, never through a page nobody opened. Every trophy guide carries 3 cited sources; 165 citations in total across 55 guides.</p>
+      <div id="source-counts"></div>
+      <h2>Coverage matrix</h2>
+      <p class="intro">Which source backs which trophy. A filled cell means the trophy's guide cites that source.</p>
+      <div class="matrix-wrap" id="matrix"></div>
+      <h2>Source pages</h2>
+      <div id="source-list"></div>
+      <p class="muted small">Sources read in full (page opened): PowerPyx, GTABase, Push Square, Sixshore, eGamers, KeenGamer, Insider Gaming, Gamemapa. Sources read via search results: Games.gg, PlanetGTA6, GTA 6 Field Guide, GGRecon, Techtroduce, Mobalytics, GTASpotter, GameTrek, All.gg, CryptoGames. PSNProfiles, Exophase, TrueTrophies and PlayStationTrophies.org are cited second-hand through the pages above that report their data, because their own lists could not be opened during this build; the hidden-flag count of 28 is cross-checked across GTABase, Insider Gaming, eGamers, Sixshore and PlanetGTA6.</p>
+    </section>
+    <footer class="colophon">
+      <p>The Leonida Trophy Codex &mdash; an unofficial fan guide. Grand Theft Auto, GTA and Rockstar Games are trademarks of their owners; this codex is not affiliated with or endorsed by Rockstar Games or Sony. Trophy names, descriptions and grades follow the official list as published in the kit starter. All guide text is original. Works fully offline; no network requests, no external fonts, images or scripts.</p>
+    </footer>
+  </main>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
